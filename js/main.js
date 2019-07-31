@@ -6,10 +6,15 @@
 // If "X" or "O" is already in the array, give errors message
 // 
 
-let gameSpaces = [1,2,3,4,5,6,7,8,9];
+let gameSpaces = ["","","","","","","","",""];
+
+function reset(){
+    document.getElementById('table-body').innerHTML = "";
+}
 
 function replaceValue(value) {
-    gameSpaces[value] = 'Testing!!';
+    gameSpaces[value] = 'X';
+    reset();
     displayBoard(gameSpaces);
 }
 
@@ -17,14 +22,12 @@ function ticTacToe(player1, player2) {
     const players = [player1,player2];
 }
 
-const player1 = () => Player(players[0], "X");
-const player2 = () => Player(players[1], "O");
 
 const Player = (name, symbol) => {
+    const player1 = () => Player(players[0], "X");
+    const player2 = () => Player(players[1], "O");
     return {name, symbol};
 };
-
-// gameSpaces[gameSpaces.indexOf(1)]
 
 function playGame(player) {
     const tableBody = document.getElementById('td').innerHTML;
@@ -38,8 +41,6 @@ function playGame(player) {
 
 function displayBoard(gameSpaces) {
     const tableBody = document.getElementById('table-body');
-    const resetBoard = () => { tableBody.innerHTML = '' };
-    const fillBoard = () => {
         tableBody.innerHTML += `<tr>
                                     <td id="td" onClick="replaceValue(${0});">${gameSpaces[0]}</td>
                                     <td id="td" onClick="replaceValue(${1});">${gameSpaces[1]}</td>
@@ -55,9 +56,6 @@ function displayBoard(gameSpaces) {
                                     <td id="td" onClick="replaceValue(${7});">${gameSpaces[7]}</td>
                                     <td id="td" onClick="replaceValue(${8});">${gameSpaces[8]}</td>
                                 </tr>`;
-    };
-    return { fillBoard };
-}
-
+};
 displayBoard(gameSpaces);
 
