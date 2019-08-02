@@ -4,8 +4,10 @@ const gameBoard = (() => {
     let board = ["", "", "", "", "", "", "", "", ""];
     let gameOne = [];
     let gameTwo = [];
+
     const tableBody = document.getElementById('table-body');
     const alert = document.getElementById('alert');
+
     const winnerCombination = [
         [0, 1, 2],
         [3, 4, 5],
@@ -62,7 +64,7 @@ const game = (() => {
 
     const startGame = () => {
         hide(restartButton);
-        startButton.addEventListener('click', function(){
+        startButton.addEventListener('click', function () {
             getName1 = document.getElementById('name1').value;
             getName2 = document.getElementById('name2').value;
             if (getName1 != "" && getName2 != "") {
@@ -80,13 +82,7 @@ const game = (() => {
         });
     }
 
-    const restartGame = () => {
-        restartButton.addEventListener("click", function(){
-            
-        });
-    }
-
-    const stopGame = () => { 
+    const stopGame = () => {
         Object.freeze(gameBoard.board);
     }
 
@@ -97,57 +93,55 @@ const game = (() => {
     const show = (element) => {
         element.style.display = "block";
     }
-    
+
     const playGame = (id) => {
-        console.log(getName1, getName2);
-    
         if (currentPlayer == 1 && gameBoard.board[id] == "") {
-            gameBoard.countTurn++;
-            gameBoard.gameOne.push(parseInt(id));
-            gameBoard.board[id] = player1;
-            gameBoard.displayBoard();
-            
+            gameRecord(player1, gameBoard.gameOne, id);
+
             if (gameBoard.gameOne.length > 2 && (gameBoard.winnerCombination.some((evt) => evt.every(e => gameBoard.gameOne.includes(e))))) {
                 gameBoard.showMessage(`${getName1} Wins!!`);
                 stopGame();
                 show(restartButton);
                 return;
-            }        
+            }
             gameBoard.showMessage(`Turn: ${getName2}`);
             currentPlayer++;
         } else if (currentPlayer != 1 && gameBoard.board[id] == "") {
-            gameBoard.countTurn++;
-            gameBoard.gameTwo.push(parseInt(id));
-            gameBoard.board[id] = player2;
-            gameBoard.displayBoard();
+            gameRecord(player2, gameBoard.gameTwo, id);
             if (gameBoard.gameTwo.length > 2 && (gameBoard.winnerCombination.some((evt) => evt.every(e => gameBoard.gameTwo.includes(e))))) {
                 gameBoard.showMessage(`${getName2} Wins!!`);
                 gameBoard.displayBoard();
                 stopGame();
                 show(restartButton);
                 return;
-            } 
+            }
             gameBoard.showMessage(`Turn: ${getName1}`);
             currentPlayer--;
-        }    
-        checkDraw();        
+        }
+        checkDraw();
+    }
+
+    const gameRecord = (player, arr, id) => {
+        gameBoard.countTurn++;
+        arr.push(parseInt(id));
+        gameBoard.board[id] = player;
+        gameBoard.displayBoard();
     }
 
     const checkDraw = () => {
-        if (gameBoard.countTurn >= 9){
+        if (gameBoard.countTurn >= 9) {
             gameBoard.showMessage("Game Over! This is a draw!") && show(restartButton);
             show(restartButton);
-        } 
+        }
     }
 
     const checkWin = (arr) => {
-        (arr.length > 2) && 
+        (arr.length > 2) &&
             (gameBoard.winnerCombination.some((evt) => evt.every(e => arr.includes(e))) == true) &&
-                (gameBoard.showMessage("You are the winner!!"));
+            (gameBoard.showMessage("You are the winner!!"));
     }
 
-    return { playGame, checkDraw, checkWin, stopGame, startGame}
+    return { playGame, checkDraw, checkWin, stopGame, startGame }
 })();
-
 
 game.startGame();
