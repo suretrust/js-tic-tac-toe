@@ -11,23 +11,27 @@
     <title>Tic Tac Toe</title>
 </head>
 <body class="bg-dark">
-    <h1 class="text-center my-3 text-white">Tic Tac Toe Game</h1>
+    <h1 class="text-center my-3 text-white">Tic-Tac-Toe Game</h1>
     <div class="container">
         <div class="mx-md-5 px-md-5">            
-            <div class="alert alert-light text-center" id="alert"></div>
+            <div class="alert alert-light text-center" id="alert">Enter your names to start.</div>
             <div id="game">
                 <table class="table table-bordered text-center">
                     <tbody id="table-body"></tbody>
                 </table>
             </div>
         </div>
-        <div class="button text-center my-3" >
-            <button class="btn btn-primary" id="start">Start</button>
-            <button class="btn btn-primary" id="restart">Restart</button>
+
+        <div class="justify-content-center" id="input">
+            <input class="form-control" type="text" placeholder="Enter player 1 Name" id="name1">
+            <input class="form-control mt-2" type="text" placeholder="Enter Player 2 Name" id="name2">
         </div>
-        <div class="form-inline justify-content-center " id="input">
-            <input class="form-control mr-2" type="text" placeholder="Enter player 1 Name" id="name1">
-            <input class="form-control" type="text" placeholder="Enter Player 2 Name" id="name2">
+            <div class="text-center" id="start">
+                <button class="btn text-center my-3 btn-primary" >Start</button>
+            </div>
+            <div class="text-center" id="restart">
+                <button class="btn text-center my-3 btn-primary" >Restart</button>
+            </div>
         </div>
     </div>
 
