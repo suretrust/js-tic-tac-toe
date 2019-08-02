@@ -26,19 +26,19 @@ const gameBoard = (() => {
     const displayBoard = () => {
         resetBoard();
         tableBody.innerHTML += `<tr class="table-primary">
-                                    <td id="0" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[0]}</div></td>
-                                    <td id="1" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[1]}</div></td>
-                                    <td id="2" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[2]}</div></td>
+                                    <td id="0" onClick="game.playGame(this.id)"><div class="py-3">${board[0]}</div></td>
+                                    <td id="1" onClick="game.playGame(this.id)"><div class="py-3">${board[1]}</div></td>
+                                    <td id="2" onClick="game.playGame(this.id)"><div class="py-3">${board[2]}</div></td>
                                 </tr>
-                                <tr class="table-secondary">
-                                    <td id="3" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[3]}</div></td>
-                                    <td id="4" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[4]}</div></td>
-                                    <td id="5" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[5]}</div></td>
+                                <tr class="table-primary">
+                                    <td id="3" onClick="game.playGame(this.id)"><div class="py-3">${board[3]}</div></td>
+                                    <td id="4" onClick="game.playGame(this.id)"><div class="py-3">${board[4]}</div></td>
+                                    <td id="5" onClick="game.playGame(this.id)"><div class="py-3">${board[5]}</div></td>
                                 </tr>
-                                <tr class="table-info">
-                                    <td id="6" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[6]}</div></td>
-                                    <td id="7" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[7]}</div></td>
-                                    <td id="8" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[8]}</div></td>
+                                <tr class="table-primary">
+                                    <td id="6" onClick="game.playGame(this.id)"><div class="py-3">${board[6]}</div></td>
+                                    <td id="7" onClick="game.playGame(this.id)"><div class="py-3">${board[7]}</div></td>
+                                    <td id="8" onClick="game.playGame(this.id)"><div class="py-3">${board[8]}</div></td>
                                 </tr>`;
 
     }
@@ -75,7 +75,7 @@ const game = (() => {
                 alert.style.color = "black";
                 gameBoard.displayBoard();
             } else {
-                alert.textContent = "Please enter names to start";
+                alert.textContent = "You must enter names to start.";
                 alert.style.backgroundColor = "orange";
                 alert.style.color = "black";
             }
