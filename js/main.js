@@ -51,20 +51,52 @@ const gameBoard = (() => {
 
 const game = (() => {
     let getName1, getName2;
-    const startGame = () => {
-        let startButton = document.getElementById('start');
-        startButton.addEventListener('click', function(){
-            getName1 = document.getElementById('name1').value;
-            getName2 = document.getElementById('name2').value;
-            gameBoard.showMessage(`Turn: ${getName1}`);
-            gameBoard.displayBoard();
-
-        });
-    }
-
     let player1 = "X";
     let player2 = "O";
     let currentPlayer = 1;
+
+    const alert = document.getElementById("alert");
+    const inputForms = document.getElementById("input");
+    const startButton = document.getElementById('start');
+    const restartButton = document.getElementById('restart');
+
+    const startGame = () => {
+        hide(restartButton);
+        startButton.addEventListener('click', function(){
+            getName1 = document.getElementById('name1').value;
+            getName2 = document.getElementById('name2').value;
+            if (getName1 != "" && getName2 != "") {
+                hide(startButton);
+                hide(inputForms);
+                gameBoard.showMessage(`Start: ${getName1}`);
+                alert.style.backgroundColor = "orange";
+                alert.style.color = "black";
+                gameBoard.displayBoard();
+            } else {
+                alert.textContent = "Please enter names to start";
+                alert.style.backgroundColor = "orange";
+                alert.style.color = "black";
+            }
+        });
+    }
+
+    const restartGame = () => {
+        restartButton.addEventListener("click", function(){
+            
+        });
+    }
+
+    const stopGame = () => { 
+        Object.freeze(gameBoard.board);
+    }
+
+    const hide = (element) => {
+        element.style.display = "none";
+    }
+
+    const show = (element) => {
+        element.style.display = "block";
+    }
     
     const playGame = (id) => {
         console.log(getName1, getName2);
@@ -78,6 +110,7 @@ const game = (() => {
             if (gameBoard.gameOne.length > 2 && (gameBoard.winnerCombination.some((evt) => evt.every(e => gameBoard.gameOne.includes(e))))) {
                 gameBoard.showMessage(`${getName1} Wins!!`);
                 stopGame();
+                show(restartButton);
                 return;
             }        
             gameBoard.showMessage(`Turn: ${getName2}`);
@@ -91,22 +124,20 @@ const game = (() => {
                 gameBoard.showMessage(`${getName2} Wins!!`);
                 gameBoard.displayBoard();
                 stopGame();
+                show(restartButton);
                 return;
             } 
             gameBoard.showMessage(`Turn: ${getName1}`);
             currentPlayer--;
-        }
-    
-        checkDraw();
-        
-    }
-
-    const stopGame = () => { 
-        Object.freeze(gameBoard.board);
+        }    
+        checkDraw();        
     }
 
     const checkDraw = () => {
-        (gameBoard.countTurn >= 9) && gameBoard.showMessage("Game Over! This is a draw!");        
+        if (gameBoard.countTurn >= 9){
+            gameBoard.showMessage("Game Over! This is a draw!") && show(restartButton);
+            show(restartButton);
+        } 
     }
 
     const checkWin = (arr) => {
