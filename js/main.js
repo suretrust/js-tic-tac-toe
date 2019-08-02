@@ -1,7 +1,4 @@
 
-// checkforwin
-// checkfor draw
-
 const gameBoard = (() => {
     let countTurn = 0;
     let board = ["", "", "", "", "", "", "", "", ""];
@@ -27,19 +24,19 @@ const gameBoard = (() => {
     const displayBoard = () => {
         resetBoard();
         tableBody.innerHTML += `<tr class="table-primary">
-                                    <td id="0" onClick="playGame(this.id)"><div class="py-3 display-1">${board[0]}</div></td>
-                                    <td id="1" onClick="playGame(this.id)"><div class="py-3 display-1">${board[1]}</div></td>
-                                    <td id="2" onClick="playGame(this.id)"><div class="py-3 display-1">${board[2]}</div></td>
+                                    <td id="0" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[0]}</div></td>
+                                    <td id="1" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[1]}</div></td>
+                                    <td id="2" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[2]}</div></td>
                                 </tr>
                                 <tr class="table-secondary">
-                                    <td id="3" onClick="playGame(this.id)"><div class="py-3 display-1">${board[3]}</div></td>
-                                    <td id="4" onClick="playGame(this.id)"><div class="py-3 display-1">${board[4]}</div></td>
-                                    <td id="5" onClick="playGame(this.id)"><div class="py-3 display-1">${board[5]}</div></td>
+                                    <td id="3" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[3]}</div></td>
+                                    <td id="4" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[4]}</div></td>
+                                    <td id="5" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[5]}</div></td>
                                 </tr>
                                 <tr class="table-info">
-                                    <td id="6" onClick="playGame(this.id)"><div class="py-3 display-1">${board[6]}</div></td>
-                                    <td id="7" onClick="playGame(this.id)"><div class="py-3 display-1">${board[7]}</div></td>
-                                    <td id="8" onClick="playGame(this.id)"><div class="py-3 display-1">${board[8]}</div></td>
+                                    <td id="6" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[6]}</div></td>
+                                    <td id="7" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[7]}</div></td>
+                                    <td id="8" onClick="game.playGame(this.id)"><div class="py-3 display-1">${board[8]}</div></td>
                                 </tr>`;
 
     }
@@ -51,8 +48,59 @@ const gameBoard = (() => {
     return { board, displayBoard, gameOne, gameTwo, showMessage, countTurn, winnerCombination };
 })();
 
+
 const game = (() => {
+    let getName1, getName2;
+    const startGame = () => {
+        let startButton = document.getElementById('start');
+        startButton.addEventListener('click', function(){
+            getName1 = document.getElementById('name1').value;
+            getName2 = document.getElementById('name2').value;
+            gameBoard.showMessage(`Turn: ${getName1}`);
+            gameBoard.displayBoard();
+
+        });
+    }
+
+    let player1 = "X";
+    let player2 = "O";
+    let currentPlayer = 1;
     
+    const playGame = (id) => {
+        console.log(getName1, getName2);
+    
+        if (currentPlayer == 1 && gameBoard.board[id] == "") {
+            gameBoard.countTurn++;
+            gameBoard.gameOne.push(parseInt(id));
+            gameBoard.board[id] = player1;
+            gameBoard.displayBoard();
+            
+            if (gameBoard.gameOne.length > 2 && (gameBoard.winnerCombination.some((evt) => evt.every(e => gameBoard.gameOne.includes(e))))) {
+                gameBoard.showMessage(`${getName1} Wins!!`);
+                stopGame();
+                return;
+            }        
+            gameBoard.showMessage(`Turn: ${getName2}`);
+            currentPlayer++;
+        } else if (currentPlayer != 1 && gameBoard.board[id] == "") {
+            gameBoard.countTurn++;
+            gameBoard.gameTwo.push(parseInt(id));
+            gameBoard.board[id] = player2;
+            gameBoard.displayBoard();
+            if (gameBoard.gameTwo.length > 2 && (gameBoard.winnerCombination.some((evt) => evt.every(e => gameBoard.gameTwo.includes(e))))) {
+                gameBoard.showMessage(`${getName2} Wins!!`);
+                gameBoard.displayBoard();
+                stopGame();
+                return;
+            } 
+            gameBoard.showMessage(`Turn: ${getName1}`);
+            currentPlayer--;
+        }
+    
+        checkDraw();
+        
+    }
+
     const stopGame = () => { 
         Object.freeze(gameBoard.board);
     }
@@ -67,47 +115,8 @@ const game = (() => {
                 (gameBoard.showMessage("You are the winner!!"));
     }
 
-    return { checkDraw, checkWin, stopGame }
+    return { playGame, checkDraw, checkWin, stopGame, startGame}
 })();
 
 
-let player1 = "X";
-let player2 = "O";
-let currentPlayer = 1;
-
-function playGame(id) {
-
-    if (currentPlayer == 1 && gameBoard.board[id] == "") {
-        gameBoard.countTurn++;
-        gameBoard.gameOne.push(parseInt(id));
-        gameBoard.board[id] = player1;
-        gameBoard.displayBoard();
-        
-        if (gameBoard.gameOne.length > 2 && (gameBoard.winnerCombination.some((evt) => evt.every(e => gameBoard.gameOne.includes(e))))) {
-            gameBoard.showMessage("Player 1 wins!!");
-            game.stopGame();
-            return;
-        }        
-        gameBoard.showMessage("Turn: Player 2");
-        currentPlayer++;
-    } else if (currentPlayer != 1 && gameBoard.board[id] == "") {
-        gameBoard.countTurn++;
-        gameBoard.gameTwo.push(parseInt(id));
-        gameBoard.board[id] = player2;
-        gameBoard.displayBoard();
-        if (gameBoard.gameTwo.length > 2 && (gameBoard.winnerCombination.some((evt) => evt.every(e => gameBoard.gameTwo.includes(e))))) {
-            gameBoard.showMessage("Player 2 wins!!");
-            gameBoard.displayBoard();
-            game.stopGame();
-            return;
-        } 
-        gameBoard.showMessage("Turn: Player 1");
-        currentPlayer--;
-    }
-
-    game.checkDraw();
-    
-}
-
-gameBoard.showMessage("Turn: Player 1");
-gameBoard.displayBoard();
+game.startGame();
