@@ -1,0 +1,22 @@
+.table {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.alert {
+    max-width: 346px;
+    margin: 18px auto;
+}
+
+.py-3 {
+    border: solid black 1px;
+    width: 90px;
+    height: 90px;
+    text-align: center;
+    font-size: 4vw;
+    margin: 0 auto;
+}
+
+.py-3:hover {
+    background: whitesmoke;
+}
