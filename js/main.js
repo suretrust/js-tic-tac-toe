@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 const gameBoard = (() => {
     let countTurn = 0;
     let board = ["", "", "", "", "", "", "", "", ""];
