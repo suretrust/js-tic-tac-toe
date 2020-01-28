@@ -7,11 +7,13 @@ Live version: https://suretrust.github.io/js-tic-tac-toe/.
 
 A simple web page tic tac toe game.
 
+![Tic Tac Toe](https://i.ibb.co/TvmXydP/Screenshot-2020-01-28-at-07-59-33.png )
+
 
 ## Contributors
 
 - [Oluwaseun](https://github.com/bellom)
-- [Saheed](https://github.com/suretrust)
+- [Saheed](https://github.com/suretrust) [(Email)](mailto:saholadele@gmail.com)
 
 ## Technologies
 
